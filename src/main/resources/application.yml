@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 
+    url: jdbc:mysql://116.62.240.193:3306/consult?autoReconnect=true&useUnicode=true&characterEncoding=utf-8
+  jpa:
+    show-sql:true
+  thymeleaf:
+    mode: HTML5
+    encoding: UTF-8
+    content-type: text/html
+    cache: false
+logging:
+  pattern:
+    console: "%d - %msg%n"
+  path: d:/
