@@ -1,4 +1,5 @@
 spring:
+  context-path: /consult
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
