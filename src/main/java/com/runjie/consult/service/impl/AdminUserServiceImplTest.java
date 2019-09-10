@@ -29,4 +29,11 @@ public class AdminUserServiceImplTest {
 
 		Assert.assertNotNull(result);
 	}
+	@Test
+	public void findOneTest() {
+
+		AdminUser result = adminUserService.findOne("abeng");
+
+		Assert.assertNotNull(result);
+	}
 }

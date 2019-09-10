@@ -1,5 +1,5 @@
 spring:
-  context-path: /consult
+  
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
@@ -12,6 +12,8 @@ spring:
     encoding: UTF-8
     content-type: text/html
     cache: false
+server: 
+  context-path: /consult
 logging:
   pattern:
     console: "%d - %msg%n"
