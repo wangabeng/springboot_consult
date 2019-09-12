@@ -1,5 +1,6 @@
 package com.runjie.consult.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +37,7 @@ public class LoginController {
 	@PostMapping(value = "/login")
 	public ResultVO findUser(@RequestBody Map<String, Object> map, HttpServletRequest request) {
 		HttpSession sessoin = request.getSession();//这就是session的创建
-		log.info("首先查看session ： sessionId：{}", sessoin.getAttribute("sessionId"));
+		
 		// 1 获取params值 Map格式
 		Map paramMap = (Map) map.get("params");
 		// 2 获取键值 比如键是"userName"
@@ -72,15 +73,18 @@ public class LoginController {
 		AdminUserVO adminUserVO = new AdminUserVO();
 		BeanUtils.copyProperties(adminUser, adminUserVO);
 		
-		// 写入session
-		
-		log.info("sessionId：{}", sessoin.getAttribute("sessionId"));
-		sessoin.setAttribute("sessionId",adminUserVO.getUserName());
-		
+		// 写入session		
+		log.info("before sessionId：{}", sessoin.getAttribute("sessionId"));
+		sessoin.setAttribute("sessionId",adminUserVO.getUserId());		
 		log.info("after sessionId：{}", sessoin.getAttribute("sessionId"));
 		
+		// 生成一个token和userInfo
+		Map<String, Object> userInfoToken = new HashMap<>();
+		userInfoToken.put("token", "231231234");
+		userInfoToken.put("userInfo", adminUserVO);
 		
-		return ResultVOUtil.success(adminUserVO);
+		// 返回前端
+		return ResultVOUtil.success(userInfoToken);
 	}
 	
 	// 管理员登录
