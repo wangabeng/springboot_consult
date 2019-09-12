@@ -1,8 +1,9 @@
 package com.runjie.consult.enums;
 
 public enum ResultEnum {
-	USER_NOT_EXIST(1, "用户不存在"), 
-	PASSWORD_ERROR(2, "密码错误");
+	USER_NOT_EXIST(1, "用户不存在"),
+	PASSWORD_ERROR(2, "密码错误"),
+	DATABASE_ERROR(100, "数据库错误");
 
 
 	private Integer code;

@@ -2,15 +2,15 @@ package com.runjie.consult.exception;
 
 import com.runjie.consult.enums.ResultEnum;
 
-public class AdminException extends RuntimeException {
+public class ConsultException extends RuntimeException {
 	private Integer code;
 
-	public AdminException(ResultEnum resultEnum) {
+	public ConsultException(ResultEnum resultEnum) {
 		super(resultEnum.getMessage());
 		this.code = resultEnum.getCode();
 	}
 
-	public AdminException(Integer code, String message) {
+	public ConsultException(Integer code, String message) {
 		super(message);
 		this.code = code;
 	}
