@@ -36,7 +36,7 @@ public class LoginController {
 	@PostMapping(value = "/login")
 	public ResultVO findUser(@RequestBody Map<String, Object> map, HttpServletRequest request) {
 		HttpSession sessoin = request.getSession();//这就是session的创建
-		log.info("after sessionId：{}", sessoin.getAttribute("sessionId"));
+		log.info("首先查看session ： sessionId：{}", sessoin.getAttribute("sessionId"));
 		// 1 获取params值 Map格式
 		Map paramMap = (Map) map.get("params");
 		// 2 获取键值 比如键是"userName"
