@@ -25,3 +25,7 @@ logging:
   pattern:
     console: "%d - %msg%n"
   path: d:/
+system:
+  #filepath: /vdb1/xxx/vue/resources
+  filepath: I:/consult/src/main/resources/static/article/
+  urlpath: http://localhost:8080/consult/article/
