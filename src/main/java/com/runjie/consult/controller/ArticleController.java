@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 // import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,29 +19,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.runjie.consult.dataobject.NewsCenter;
+import com.runjie.consult.dto.NewsCenterDTO;
+import com.runjie.consult.service.NewsCenterService;
+import com.runjie.consult.utils.KeyUtil;
 import com.runjie.consult.utils.MD5Util;
 
-
-
 //跨域请求
-@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
+// @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/article")
 public class ArticleController {
 	// 注入配置
 	@Value("${system.filepath}")
-    private String filepath;
+	private String filepath;
 	@Value("${system.urlpath}")
-    private String urlpath;
+	private String urlpath;
 	
+	@Autowired
+	private NewsCenterService newsCenterService;
+
 	// 普通图片文件上传
 	@PostMapping("/upload")
 	public String uploadpic(@RequestParam("file") MultipartFile file) {
 		System.out.println("haha");
 		System.out.println(file);
 
-
-		
 		String fileName = "";
 		if (!file.isEmpty()) {
 			if (file.getSize() > 1024 * 1024 * 5) {
@@ -52,9 +57,9 @@ public class ArticleController {
 
 			// 文件名
 			fileName = System.currentTimeMillis() + suffix;
-			// 上传的文件完整路径 包含文件名 D:/upload/ 在配置文件中配置  一般不要放在项目文件夹下
+			// 上传的文件完整路径 包含文件名 D:/upload/ 在配置文件中配置 一般不要放在项目文件夹下
 			String saveFileName = filepath + fileName;
-			
+
 			// 创建文件对象
 			File dest = new File(saveFileName);
 			if (!dest.getParentFile().exists()) { // 判断文件父目录是否存在
@@ -73,35 +78,47 @@ public class ArticleController {
 			System.out.println("上传出错");
 			return "上传出错";
 		}
-		
-		// 上传成功后返回 此处应该返回url路径  例如 http://localhost:8080/article/1567494335032.png
-        String imgUrl= urlpath +  fileName; // 坑 一定要加 http://
-        // System.out.println(imgUrl);
-        // 返回后 图片在前端不能回显
-        return imgUrl;
-		
+
+		// 上传成功后返回 此处应该返回url路径 例如 http://localhost:8080/article/1567494335032.png
+		String imgUrl = urlpath + fileName; // 坑 一定要加 http://
+		// System.out.println(imgUrl);
+		// 返回后 图片在前端不能回显
+		return imgUrl;
+
 	}
-	
+
 	// @RequestParam("content") String content
 	// wangeditor文档上传
 	@PostMapping("/editorsubmit")
 	public void editorsubmit(@RequestBody Map<String, Object> map) {
 		// System.out.println(map);
 		Map paramMap = (Map) map.get("params");
-		
-		String author = paramMap.get("author").toString(); 
-		String type = paramMap.get("type").toString(); 
+
+		String author = paramMap.get("author").toString();
+		String type = paramMap.get("type").toString();
 		String mainPic = paramMap.get("mainPic").toString();
 		String content = paramMap.get("content").toString();
+
+		// 生成id
+		String genId = KeyUtil.genUniqueKey();
+		NewsCenterDTO newsCenterDTO = new NewsCenterDTO();
 		
-		System.out.println(author + type + mainPic + content);
+		// 新闻无主图
+		newsCenterDTO.setNewsId(genId);
+		newsCenterDTO.setNewsAuthor(author);
+		newsCenterDTO.setNewsTitle(type);
+		newsCenterDTO.setNewsContent(content);
+		NewsCenter newsCenter = new NewsCenter();
+		// 保存到新闻表中
+		newsCenterService.create(newsCenterDTO);
+		
+		System.out.println("aftercreat");
 	}
-	
+
 	// wangeditor图片上传
 	@PostMapping("/editorupload")
 	public WangEditorResponse editorupload(@RequestParam("file") MultipartFile file) {
 
-		
 		String fileName = "";
 		if (!file.isEmpty()) {
 			if (file.getSize() > 1024 * 1024 * 5) {
@@ -114,9 +131,9 @@ public class ArticleController {
 
 			// 文件名
 			fileName = System.currentTimeMillis() + suffix;
-			// 上传的文件完整路径 包含文件名 D:/upload/ 在配置文件中配置  一般不要放在项目文件夹下
+			// 上传的文件完整路径 包含文件名 D:/upload/ 在配置文件中配置 一般不要放在项目文件夹下
 			String saveFileName = filepath + fileName;
-			
+
 			// 创建文件对象
 			File dest = new File(saveFileName);
 			if (!dest.getParentFile().exists()) { // 判断文件父目录是否存在
@@ -135,17 +152,17 @@ public class ArticleController {
 			System.out.println("上传出错");
 			return new WangEditorResponse("1", "上传出错");
 		}
-		
-		// 上传成功后返回 此处应该返回url路径  例如 http://localhost:8080/article/1567494335032.png
-        String imgUrl= urlpath +  fileName; // 坑 一定要加 http://
-        System.out.println(imgUrl);
-        // 返回后 图片在前端不能回显
-        return new WangEditorResponse("0", imgUrl );
+
+		// 上传成功后返回 此处应该返回url路径 例如 http://localhost:8080/article/1567494335032.png
+		String imgUrl = urlpath + fileName; // 坑 一定要加 http://
+		System.out.println(imgUrl);
+		// 返回后 图片在前端不能回显
+		return new WangEditorResponse("0", imgUrl);
 	}
-	
+
 	// 返回的WangEditorResponse
 	public class WangEditorResponse {
-		
+
 		String errno;
 		List<String> data;
 
@@ -165,7 +182,6 @@ public class ArticleController {
 			this.data = data;
 		}
 
-		
 		public WangEditorResponse(String errno, List<String> data) {
 			this.errno = errno;
 			this.data = data;

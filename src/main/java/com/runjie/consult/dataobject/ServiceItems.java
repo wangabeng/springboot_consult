@@ -10,9 +10,14 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name="service_items")
 @DynamicUpdate
+@Getter
+@Setter
 public class ServiceItems {
 	@Id
 	private String serviceId;
@@ -22,35 +27,5 @@ public class ServiceItems {
 	private Date createTime;
 	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd") 
 	private Date updateTime;
-	public String getServiceId() {
-		return serviceId;
-	}
-	public void setServiceId(String serviceId) {
-		this.serviceId = serviceId;
-	}
-	public String getServiceName() {
-		return serviceName;
-	}
-	public void setServiceName(String serviceName) {
-		this.serviceName = serviceName;
-	}
-	public String getServiceContent() {
-		return serviceContent;
-	}
-	public void setServiceContent(String serviceContent) {
-		this.serviceContent = serviceContent;
-	}
-	public Date getCreateTime() {
-		return createTime;
-	}
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
-	
+
 }
