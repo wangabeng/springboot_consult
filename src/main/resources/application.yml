@@ -4,6 +4,9 @@ spring:
     username: root
     password: 
     url: jdbc:mysql://116.62.240.193:3306/consult?autoReconnect=true&useUnicode=true&characterEncoding=utf-8
+    testWhileIdle: true
+    timeBetweenEvictionRunsMillis: 60000
+    validationQuery: SELECT 1
   jpa:
     show-sql:true
   thymeleaf:
@@ -16,9 +19,6 @@ server:
   tomcat: 
     max-http-header-size: 10240000
     max-http-post-size: 10240000
-    testWhileIdle: true
-    timeBetweenEvictionRunsMillis: 60000
-    validationQuery: SELECT 1
   servlet: 
     context-path: /consult
 logging:
