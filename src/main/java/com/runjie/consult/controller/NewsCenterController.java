@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,8 +32,8 @@ public class NewsCenterController {
 			@RequestParam(value="pagesize",  defaultValue="3")Integer pageSize) {
 		// Integer curPage = 0; // 第2页 
 		// Integer PageSize = 4; // 页面容量
-		// curPage从1开始 查询的时候 对于0
-		Pageable pageable  = PageRequest.of(curPage - 1, pageSize);
+		// curPage从1开始 查询的时候 对于0 DESC降序
+		Pageable pageable  = PageRequest.of(curPage - 1, pageSize, Sort.Direction.DESC, "createTime");
 		Page<NewsCenter> newsCenterPage = newsCenterService.findList(pageable);
 		Map<String, Object> map = new HashMap<>();
 		map.put("curPage", curPage); // 当前第几页 curpage = 0 是第1页
@@ -43,6 +44,21 @@ public class NewsCenterController {
 		
 		map.put("TotalPages", newsCenterPage.getTotalPages());		
 		map.put("content", newsCenterPage.getContent());
+		
+		return ResultVOUtil.success(map);
+	}
+	
+	// 新闻列表
+	@GetMapping("/detail")
+	public ResultVO detail(@RequestParam (value = "newsId") String newsId) {
+		// 找到当前newsId的详情 找到上一条 下一条是否存在
+		NewsCenter curNews = newsCenterService.findByNewsId(newsId);
+		NewsCenter preNews = newsCenterService.findPreOne(newsId);
+		NewsCenter nextNews = newsCenterService.findNextOne(newsId);
+		Map<String, Object> map = new HashMap<>();
+		map.put("cur", curNews);
+		map.put("pre", preNews);
+		map.put("next", nextNews);
 		
 		return ResultVOUtil.success(map);
 	}

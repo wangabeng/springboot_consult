@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.DigestUtils;
 
@@ -26,7 +27,9 @@ public class NewsCenterServiceImplTest {
 
 	@Test
 	public void findAllnewsCenter () {
-		Pageable pageable  = PageRequest.of(0, 2);
+		// 分页设定 
+		// Pageable pageable  = PageRequest.of(0, 2);
+		Pageable pageable  = PageRequest.of(0, 2, Sort.Direction.DESC, "createTime");
 		Page<NewsCenter> newsCenterPage = newsCenterService.findList(pageable);
 		Map<String, Object> map = new HashMap<>();
 		map.put("结果", newsCenterPage);
@@ -35,9 +38,18 @@ public class NewsCenterServiceImplTest {
 		Assert.assertNotEquals(0, newsCenterPage.getTotalElements());
 	}
 	
+	//	上一条
 	@Test
 	public void findpreUser () {
-		NewsCenter reuslt = newsCenterService.findPreOne("1568475648767913964");
+		NewsCenter reuslt = newsCenterService.findPreOne("1568476549285399998");
+		System.out.println(reuslt.getNewsId());
+		Assert.assertNotEquals(0, reuslt);
+	}
+	
+//	下一条
+	@Test
+	public void findNextOne () {
+		NewsCenter reuslt = newsCenterService.findNextOne("1568476549285399998");
 		System.out.println(reuslt.getNewsId());
 		Assert.assertNotEquals(0, reuslt);
 	}
