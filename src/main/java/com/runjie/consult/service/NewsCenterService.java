@@ -17,4 +17,7 @@ public interface NewsCenterService {
 	
 	// 分页查询 无条件
 	Page<NewsCenter> findList(Pageable pageable);
+	
+	// 查询上一条
+	NewsCenter findPreOne(String id);
 }

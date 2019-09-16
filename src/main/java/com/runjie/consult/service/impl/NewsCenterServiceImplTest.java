@@ -34,4 +34,11 @@ public class NewsCenterServiceImplTest {
 		System.out.print(map.get("结果"));
 		Assert.assertNotEquals(0, newsCenterPage.getTotalElements());
 	}
+	
+	@Test
+	public void findpreUser () {
+		NewsCenter reuslt = newsCenterService.findPreOne("1568475648767913964");
+		System.out.println(reuslt.getNewsId());
+		Assert.assertNotEquals(0, reuslt);
+	}
 }

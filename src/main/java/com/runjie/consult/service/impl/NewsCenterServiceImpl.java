@@ -41,6 +41,14 @@ public class NewsCenterServiceImpl implements NewsCenterService {
 		Page<OrderDTO> orderDTOPage = new PageImpl<OrderDTO>(orderDTOList, pageable,
 				orderMasterPage.getTotalElements());
 		return orderDTOPage;*/
+	}
+
+	@Override
+	public NewsCenter findPreOne(String id) {
+		// TODO Auto-generated method stub
+		NewsCenter newsCenter = new NewsCenter();
+		newsCenter = repository.findPre(id);
+		return newsCenter;
 	};
 	
 	
