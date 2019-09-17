@@ -60,13 +60,29 @@ public class NewsCenterServiceImpl implements NewsCenterService {
 		newsCenter = repository.findPre(repository.findByNewsId(newsId).getCreateTime());
 		return newsCenter;
 	}
-
+	
 	@Override
 	public NewsCenter findNextOne(String newsId) {
 		// TODO Auto-generated method stub
 		NewsCenter newsCenter = new NewsCenter();
 		newsCenter = repository.findNext(repository.findByNewsId(newsId).getCreateTime());
 		return newsCenter;
+	}
+	
+	// 删除一条记录
+	@Override
+	public void deleteOne(String newsId) {
+		// TODO Auto-generated method stub
+		repository.deleteOne(newsId);
+	}
+
+	@Override
+	public void updateOne(String content, String newsId) {
+		// TODO Auto-generated method stub
+		// 1 先查询存不存在
+		
+		// 2 更新操作
+		repository.updateOne(content, newsId);
 	}
 
 }

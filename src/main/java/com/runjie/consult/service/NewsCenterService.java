@@ -27,4 +27,10 @@ public interface NewsCenterService {
 
 	// 查询下一条
 	NewsCenter findNextOne(String newsId);
+	
+	// 根据id删除一条  不可以返回boolean类型
+	void deleteOne(String newsId);
+	
+	// 更新一条数据
+	void updateOne(String content, String newsId);
 }

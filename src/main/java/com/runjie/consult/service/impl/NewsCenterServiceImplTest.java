@@ -46,11 +46,26 @@ public class NewsCenterServiceImplTest {
 		Assert.assertNotEquals(0, reuslt);
 	}
 	
-//	下一条
+	//	下一条
 	@Test
 	public void findNextOne () {
 		NewsCenter reuslt = newsCenterService.findNextOne("1568476549285399998");
 		System.out.println(reuslt.getNewsId());
 		Assert.assertNotEquals(0, reuslt);
+	}
+	
+	// 删除一条
+	@Test
+	public void deleteOneTest () {
+		newsCenterService.deleteOne("3244444444");
+		System.out.println("删除成功");
+	}
+	
+	// 更新一条
+	@Test
+	public void updateTest () {
+		 newsCenterService.updateOne("<p>3再次更新更新的内容</p>", "1568638181852220187");
+		System.out.println("更新成功");
+		// Assert.assertNotEquals(0, result);
 	}
 }
