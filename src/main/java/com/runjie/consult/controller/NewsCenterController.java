@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -62,4 +63,19 @@ public class NewsCenterController {
 		
 		return ResultVOUtil.success(map);
 	}
+	
+	// 删除一条新闻
+	@PostMapping("/delete")
+	public ResultVO delete (@RequestParam (value = "id") String newsId) {
+		// System.out.print(newsId);
+		newsCenterService.deleteOne(newsId);
+		
+		return ResultVOUtil.success();
+	}
+	// 另外一种前端以json格式请求的方式
+	/*public void delete (@RequestBody Map<String, Object> map) {
+		Map paramMap = (Map) map.get("params");
+		String id = paramMap.get("id").toString();
+		System.out.print(id);
+	}*/
 }
