@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.runjie.consult.VO.ResultVO;
 import com.runjie.consult.dataobject.NewsCenter;
 import com.runjie.consult.dto.NewsCenterDTO;
 import com.runjie.consult.service.NewsCenterService;
 import com.runjie.consult.utils.KeyUtil;
 import com.runjie.consult.utils.MD5Util;
+import com.runjie.consult.utils.ResultVOUtil;
 
 //跨域请求
 // @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
@@ -88,9 +90,9 @@ public class ArticleController {
 	}
 
 	// @RequestParam("content") String content
-	// wangeditor文档上传
+	// wangeditor 文章总体内容 上传
 	@PostMapping("/editorsubmit")
-	public void editorsubmit(@RequestBody Map<String, Object> map) {
+	public ResultVO editorsubmit(@RequestBody Map<String, Object> map) {
 		// System.out.println(map);
 		Map paramMap = (Map) map.get("params");
 
@@ -112,7 +114,7 @@ public class ArticleController {
 		// 保存到新闻表中
 		newsCenterService.create(newsCenterDTO);
 		
-		System.out.println("aftercreat");
+		return ResultVOUtil.success();
 	}
 
 	// wangeditor图片上传

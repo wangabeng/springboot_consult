@@ -50,7 +50,7 @@ public class NewsCenterController {
 	
 	// 新闻列表
 	@GetMapping("/detail")
-	public ResultVO detail(@RequestParam (value = "newsId") String newsId) {
+	public ResultVO detail(@RequestParam (value = "id") String newsId) {
 		// 找到当前newsId的详情 找到上一条 下一条是否存在
 		NewsCenter curNews = newsCenterService.findByNewsId(newsId);
 		NewsCenter preNews = newsCenterService.findPreOne(newsId);
