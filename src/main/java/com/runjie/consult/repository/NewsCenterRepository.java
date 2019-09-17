@@ -30,6 +30,11 @@ public interface NewsCenterRepository extends JpaRepository<NewsCenter, String> 
 	NewsCenter findNext(Date createTime); // String newsId
 	
 	// 删除一条数据
+	@Query(value = "delete from news_center where news_id = ?1", nativeQuery = true)
+	void deleteOne(String newsId);
+	// @Query(value = "delete from bdsp_storm_manage where id=?1 ", nativeQuery = true)
+	// @Modifying
+	// public void deleteStormManageById(int id);
 	
 	// 修改文章内容
 	
