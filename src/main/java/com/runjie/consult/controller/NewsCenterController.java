@@ -49,7 +49,7 @@ public class NewsCenterController {
 		return ResultVOUtil.success(map);
 	}
 	
-	// 新闻列表
+	// 新闻 详情
 	@GetMapping("/detail")
 	public ResultVO detail(@RequestParam (value = "id") String newsId) {
 		// 找到当前newsId的详情 找到上一条 下一条是否存在

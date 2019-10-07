@@ -14,7 +14,7 @@ public class MyPicConfig implements WebMvcConfigurer {
       //String savePath = "\\src\\main\\resources\\static\\upload\\";
       //String path = System.getProperty("user.dir")+savePath;
       //本地路径
-      String path = "I:/consult/src/main/resources/static/article/";
+      String path = "F:/springboot_consult/src/main/resources/static/article/";
       
       registry.addResourceHandler("/article/**").addResourceLocations("file:"+path);
   }

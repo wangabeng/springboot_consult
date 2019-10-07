@@ -24,11 +24,13 @@ server:
   tomcat: 
     max-http-header-size: 10240000
     max-http-post-size: 10240000
+  servlet: 
+    context-path: /consult  
 logging:
   pattern:
     console: "%d - %msg%n"
   path: d:/
 system:
   #filepath: /vdb1/xxx/vue/resources
-  filepath: I:/consult/src/main/resources/static/article/
+  filepath: F:/springboot_consult/src/main/resources/static/article/
   urlpath: http://localhost:8080/consult/article/
